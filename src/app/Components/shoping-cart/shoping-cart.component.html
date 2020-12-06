@@ -1,0 +1,58 @@
+
+<br>
+<div class="container">
+<div class="row">
+    <div class="col-sm-6">
+        <select class="form-control" name="prods" [(ngModel)]="selectedProduct">
+            <option [ngValue]="pr" *ngFor="let pr of productsData">{{pr.title}} - {{pr.cost}}</option>
+        </select>
+    </div>
+    <div class="col-sm-6">
+    <button class="btn btn-primary" (click)="addToCart()">Agregalo al carrito</button>
+    </div>
+</div>
+
+    <div class="row">
+
+        <div class="col-12">
+            <p>Items que vas a comprar: {{productCartItems.length}}</p>
+        </div>
+
+    </div>
+
+
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Costo</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prod of productCartItems; index as myIndex">
+                <td>{{prod.title}}</td>
+                <td>{{prod.description}}</td>
+                <td>{{prod.cost}}</td>
+                <!-- <td>{{prod.quantity}}</td> -->
+                <td><input type="number" [(ngModel)]="prod.quantity" ></td>
+                <td>{{prod.quantity * prod.cost}}</td>
+                <td><button class="btn btn-danger" (click)="deleteProduct(myIndex)">Borrar</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div *ngIf="productCartItems.length >0" class="col-sm-12" style="text-align: center;">
+            <h3>Total: $ {{totalCart()}}</h3>
+            <button class="btn btn-success" (click)="saveShopingCart()">Comprar</button>
+            
+            <div *ngIf="isProcessing" class="spinner-border text-success"></div>
+        </div>
+    </div>
+
+</div>
